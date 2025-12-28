@@ -11,13 +11,6 @@ export const PRODUCT_BY_SPECIFICATION = gql`
       productImage {
         image
       }
-      Varients {
-        id: varientId
-        size
-        color
-        prize
-        stock
-      }
     }
   }
 `;
@@ -33,13 +26,6 @@ export const PRODUCTS_BY_CATEGORY = gql`
       productImage {
         image
       }
-      Varients {
-        id: varientId
-        size
-        color
-        prize
-        stock
-      }
     }
   }
 `;
@@ -54,13 +40,6 @@ export const GET_PRODUCTS = gql`
       featureImage
       productImage {
         image
-      }
-      Varients {
-        id: varientId
-        size
-        color
-        prize
-        stock
       }
     }
   }

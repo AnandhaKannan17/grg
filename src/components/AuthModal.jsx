@@ -1,10 +1,12 @@
 import React, { useState } from 'react';
 import { motion, AnimatePresence } from 'framer-motion';
 import { X, Mail, Lock, User, Eye, EyeOff, ArrowRight, Phone, KeyRound, CheckCircle, ArrowLeft, Loader2 } from 'lucide-react';
-import { loginWithMobileService, verifyOtpService, signupService } from '../shops-query/modules/auth';
+import { loginUser, registerUser } from '../shops-query/modules/auth';
+import { useToast } from '../context/ToastContext';
 import '../styles/AuthModal.css';
 
 const AuthModal = ({ isOpen, onClose }) => {
+    const { showToast } = useToast();
     const [isLogin, setIsLogin] = useState(true);
     const [isLoading, setIsLoading] = useState(false);
     const [error, setError] = useState('');
@@ -12,7 +14,7 @@ const AuthModal = ({ isOpen, onClose }) => {
     const [showConfirmPassword, setShowConfirmPassword] = useState(false);
 
     // Forgot password flow states
-    const [forgotPasswordStep, setForgotPasswordStep] = useState(0); // 0: not active, 1: enter mobile, 2: enter OTP, 3: new password
+    const [forgotPasswordStep, setForgotPasswordStep] = useState(0);
     const [forgotPasswordData, setForgotPasswordData] = useState({
         mobile: '',
         otp: '',
@@ -27,6 +29,14 @@ const AuthModal = ({ isOpen, onClose }) => {
         password: ''
     });
 
+    // Reset form when modal closes
+    React.useEffect(() => {
+        if (!isOpen) {
+            setFormData({ name: '', email: '', mobile: '', password: '' });
+            setError('');
+        }
+    }, [isOpen]);
+
     const handleSubmit = async (e) => {
         e.preventDefault();
         setIsLoading(true);
@@ -34,25 +44,32 @@ const AuthModal = ({ isOpen, onClose }) => {
 
         try {
             if (isLogin) {
-                // Backend login service uses mobile
-                const response = await loginWithMobileService({ mobile: formData.mobile || formData.email });
-                if (response.status === 'success') {
-                    setForgotPasswordData({ ...forgotPasswordData, mobile: formData.mobile || formData.email });
-                    setForgotPasswordStep(2); // Move to OTP verification for login
+                const success = await loginUser(formData.email, formData.password);
+                if (success) {
+                    showToast('Login successful! Welcome back.', 'success');
+                    onClose();
+                    window.location.reload();
                 } else {
-                    setError(response.message || 'Login failed');
+                    const errMsg = 'Login failed. Please check your credentials.';
+                    setError(errMsg);
+                    showToast(errMsg, 'error');
                 }
             } else {
-                const response = await signupService(formData);
-                if (response.status === 'success') {
+                const success = await registerUser(formData);
+                if (success) {
+                    showToast('Account created successfully! Please sign in.', 'success');
                     setIsLogin(true);
                     setError('Signup success! Please login.');
                 } else {
-                    setError(response.message || 'Signup failed');
+                    const errMsg = 'Signup failed. User may already exist.';
+                    setError(errMsg);
+                    showToast(errMsg, 'error');
                 }
             }
         } catch (err) {
-            setError('Network error. Please try again.');
+            const errMsg = err.message.includes('<!DOCTYPE') ? 'Server error. Please try again.' : 'An error occurred. Please try again.';
+            setError(errMsg);
+            showToast(errMsg, 'error');
         } finally {
             setIsLoading(false);
         }
@@ -86,48 +103,12 @@ const AuthModal = ({ isOpen, onClose }) => {
 
     const handleSendOtp = async (e) => {
         e.preventDefault();
-        setIsLoading(true);
-        setError('');
-
-        try {
-            const response = await loginWithMobileService({ mobile: forgotPasswordData.mobile });
-            if (response.status === 'success') {
-                setForgotPasswordStep(2);
-            } else {
-                setError(response.message || 'Failed to send OTP');
-            }
-        } catch (err) {
-            setError('Failed to connect to server');
-        } finally {
-            setIsLoading(false);
-        }
+        setError('Forgot password is not available currently.');
     };
 
     const handleVerifyOtp = async (e) => {
         e.preventDefault();
-        setIsLoading(true);
-        setError('');
-
-        try {
-            const response = await verifyOtpService({
-                mobile: forgotPasswordData.mobile,
-                otp: forgotPasswordData.otp
-            });
-            if (response.status === 'success') {
-                if (forgotPasswordStep === 2 && isLogin) {
-                    console.log('Login successful');
-                    onClose();
-                } else {
-                    setForgotPasswordStep(3);
-                }
-            } else {
-                setError(response.message || 'Invalid OTP');
-            }
-        } catch (err) {
-            setError('Verification failed');
-        } finally {
-            setIsLoading(false);
-        }
+        setError('Verification service unavailable.');
     };
 
     const handleResetPassword = (e) => {
@@ -423,6 +404,7 @@ const AuthModal = ({ isOpen, onClose }) => {
                                                 value={formData.email}
                                                 onChange={handleInputChange}
                                                 required
+                                            //autoComplete="off"
                                             />
                                         </div>
                                         <AnimatePresence mode="wait">
@@ -432,7 +414,6 @@ const AuthModal = ({ isOpen, onClose }) => {
                                                     initial={{ opacity: 0, height: 0 }}
                                                     animate={{ opacity: 1, height: 'auto' }}
                                                     exit={{ opacity: 0, height: 0 }}
-                                                    transition={{ duration: 0.3 }}
                                                 >
                                                     <div className="input-icon">
                                                         <Phone size={18} />
@@ -461,6 +442,7 @@ const AuthModal = ({ isOpen, onClose }) => {
                                                 value={formData.password}
                                                 onChange={handleInputChange}
                                                 required
+                                                autoComplete="new-password"
                                             />
                                             <button type="button" className="password-toggle" onClick={() => setShowPassword(!showPassword)}>
                                                 {showPassword ? <EyeOff size={18} /> : <Eye size={18} />}
@@ -478,7 +460,10 @@ const AuthModal = ({ isOpen, onClose }) => {
                                             whileTap={{ scale: 0.98 }}
                                             disabled={isLoading}
                                         >
-                                            <span>{isLoading ? <Loader2 className="animate-spin" size={18} /> : (isLogin ? 'Sign In' : 'Create Account')}</span>
+                                            <span>
+                                                {isLoading ? <Loader2 className="animate-spin" size={18} /> :
+                                                    isLogin ? 'Sign In' : 'Create Account'}
+                                            </span>
                                             <ArrowRight size={18} />
                                         </motion.button>
                                     </form>

@@ -17,10 +17,7 @@ const CategorySection = ({ title, categoryId, index, defaultOpen = false }) => {
     // Fetch products for this specific category
     const { products, loading, error } = useProducts({ mainCategory: [Number(categoryId)] });
 
-    const hasMoreProducts = products.length > MAX_VISIBLE_PRODUCTS;
-    const visibleProducts = showAll ? products : products.slice(0, MAX_VISIBLE_PRODUCTS);
-
-    if (loading && !products.length) {
+    if (loading && (!products || products.length === 0)) {
         return (
             <div className="category-section loading">
                 <div className="category-bar">
@@ -31,7 +28,42 @@ const CategorySection = ({ title, categoryId, index, defaultOpen = false }) => {
         );
     }
 
-    if (!loading && products.length === 0) return null;
+    if (error) {
+        return (
+            <div className="category-section error">
+                <div className="category-bar">
+                    <span className="category-title">{title}</span>
+                    <span className="error-text">Failed to load</span>
+                </div>
+            </div>
+        );
+    }
+
+    const hasProducts = products.length > 0;
+    const hasMoreProducts = products.length > MAX_VISIBLE_PRODUCTS;
+    const visibleProducts = showAll ? products : products.slice(0, MAX_VISIBLE_PRODUCTS);
+
+    if (!loading && !hasProducts) {
+        return (
+            <div className="category-section empty">
+                <div className="category-bar" onClick={() => setIsOpen(!isOpen)}>
+                    <span className="category-title">{title}</span>
+                    <div className="category-right">
+                        <span className="category-count">No items</span>
+                        <ChevronRight
+                            size={20}
+                            className={`category-chevron ${isOpen ? 'open' : ''}`}
+                        />
+                    </div>
+                </div>
+                {isOpen && (
+                    <div className="category-products empty-state">
+                        <p>No products found in this category.</p>
+                    </div>
+                )}
+            </div>
+        );
+    }
 
     return (
         <motion.div
@@ -75,7 +107,7 @@ const CategorySection = ({ title, categoryId, index, defaultOpen = false }) => {
                     >
                         {visibleProducts.map((product, idx) => (
                             <motion.div
-                                key={product.id}
+                                key={`${categoryId}-${product.id}-${idx}`}
                                 initial={{ opacity: 0, x: -20 }}
                                 animate={{
                                     opacity: 1,
@@ -123,7 +155,7 @@ const CategorySection = ({ title, categoryId, index, defaultOpen = false }) => {
 
 const Home = () => {
     const { loading: shopLoading, shopId } = useShop();
-    const { categories, loading: catsLoading } = useCategories();
+    const { categories, loading: catsLoading, error: catsError } = useCategories();
 
     if (shopLoading) {
         return (
@@ -137,7 +169,11 @@ const Home = () => {
         <div className="home-page">
             <AnimatedBackground variant="home" />
             <div className="container" style={{ marginTop: '30px', display: 'flex', flexDirection: 'column', gap: '10px' }}>
-                {catsLoading ? (
+                {catsError ? (
+                    <div className="error-container p-8 text-center text-red-500">
+                        <p>Error loading categories: {catsError.message}</p>
+                    </div>
+                ) : catsLoading ? (
                     <div className="flex justify-center p-8">
                         <Loader2 className="animate-spin" size={32} />
                     </div>

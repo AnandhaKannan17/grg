@@ -7,14 +7,16 @@ export const useOrders = (userId) => {
 
     const { loading, error, data, refetch } = useQuery(GET_ORDER_HISTORY, {
         variables: {
-            shopId: Number(shopId),
-            userId: Number(userId)
+            filter: {
+                shopId: Number(shopId),
+                userId: Number(userId)
+            }
         },
         skip: !shopId || !userId
     });
 
     return {
-        orders: data?.orders || [],
+        orders: data?.orderHistory || [],
         loading,
         error,
         refetch
