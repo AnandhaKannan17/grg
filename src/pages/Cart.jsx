@@ -10,7 +10,10 @@ import '../styles/Cart.css';
 const Cart = () => {
     const { cart, removeFromCart, updateQuantity, placeOrder } = useContext(ShopContext);
 
-    const subtotal = cart.reduce((acc, item) => acc + item.price * item.quantity, 0);
+    const subtotal = cart.reduce((acc, item) => {
+        const price = Number(item.price || item.prize || 0);
+        return acc + price * (item.quantity || 1);
+    }, 0);
     const shipping = subtotal > 500 ? 0 : 25;
     const total = subtotal + shipping;
 
@@ -60,7 +63,7 @@ const Cart = () => {
                                 <div className="item-info">
                                     <div className="item-details">
                                         <h3>{item.name}</h3>
-                                        <p className="item-price">Rs.{item.price.toFixed(2)}</p>
+                                        <p className="item-price">Rs.{(Number(item.price || item.prize || 0)).toFixed(2)}</p>
                                     </div>
                                     <div className="item-actions">
                                         <div className="quantity-controls">

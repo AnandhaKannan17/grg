@@ -12,7 +12,24 @@ const ProductCard = ({ product }) => {
 
   const productName = product.name;
   const productPrice = product.prize;
-  const featureImage = product.featureImage;
+
+  // Normalize image URL - handle relative paths from API
+  const getImageUrl = (url) => {
+    if (!url) return null;
+    // If already absolute URL, return as is
+    if (url.startsWith('http://') || url.startsWith('https://')) {
+      return url;
+    }
+    // Prepend the CDN base URL for relative paths
+    return `https://api.shop.strackit.com${url.startsWith('/') ? '' : '/'}${url}`;
+  };
+
+  const featureImage = getImageUrl(product.featureImage);
+
+  // Debug: Log the image URL for troubleshooting
+  if (product.featureImage) {
+    console.log(`Product: ${product.name}, Original: ${product.featureImage}, Resolved: ${featureImage}`);
+  }
 
   // Check if product is in cart and get quantity
   const cartItem = cart.find(item => item.id === product.id);
@@ -43,13 +60,14 @@ const ProductCard = ({ product }) => {
       initial={{ opacity: 0, y: 10 }}
       animate={{ opacity: 1, y: 0 }}
       whileHover={{ scale: 1.002 }}
-      className={`product-card ${!hasValidImage ? 'no-image' : ''}`}
+      className="product-card"
     >
-      {hasValidImage && (
-        <div className="product-image-container" style={{ backgroundColor: bgColor }}>
+      {/* Always show the colored placeholder box */}
+      <div className="product-image-container" style={{ backgroundColor: bgColor }}>
+        {featureImage && !imageError && (
           <img src={featureImage} alt={productName} onError={handleImageError} />
-        </div>
-      )}
+        )}
+      </div>
 
       <div className="product-info-center">
         <h3 className="product-name">{productName}</h3>

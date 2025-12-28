@@ -8,8 +8,11 @@ import '../styles/FloatingCart.css';
 const FloatingCart = () => {
     const { cart } = useContext(ShopContext);
 
-    const totalItems = cart.reduce((acc, item) => acc + item.quantity, 0);
-    const totalPrice = cart.reduce((acc, item) => acc + item.price * item.quantity, 0);
+    const totalItems = cart.reduce((acc, item) => acc + (item.quantity || 1), 0);
+    const totalPrice = cart.reduce((acc, item) => {
+        const price = Number(item.price || item.prize || 0);
+        return acc + price * (item.quantity || 1);
+    }, 0);
 
     return (
         <AnimatePresence>

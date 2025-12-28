@@ -17,15 +17,18 @@ export const useProducts = ({ mainCategory, subCategory, search, filters } = {})
 
     if (mainCategory || subCategory) {
         // If IDs are provided (like in Home.jsx), use GET_PRODUCTS
-        if (typeof mainCategory === 'number' || (Array.isArray(mainCategory) && typeof mainCategory[0] === 'number')) {
+        const mCat = Array.isArray(mainCategory) ? mainCategory[0] : mainCategory;
+        const sCat = Array.isArray(subCategory) ? subCategory[0] : subCategory;
+
+        if (typeof mCat === 'number' || typeof sCat === 'number') {
             query = GET_PRODUCTS;
             variables = {
                 filter: {
-                    shopId: Number(shopId),
-                    masterCategoryId: Array.isArray(mainCategory) ? mainCategory[0] : mainCategory,
-                    categoryId: Array.isArray(subCategory) ? subCategory[0] : subCategory,
+                    shopId: Number(shopId)
                 }
             };
+            if (mCat) variables.filter.masterCategoryId = Number(mCat);
+            if (sCat) variables.filter.categoryId = Number(sCat);
         } else {
             // If names are provided, use PRODUCTS_BY_CATEGORY
             query = PRODUCTS_BY_CATEGORY;
