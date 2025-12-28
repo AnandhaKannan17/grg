@@ -1,0 +1,218 @@
+.product-card {
+    display: flex;
+    align-items: center;
+    background: var(--card-bg);
+    padding: 16px 24px;
+    border-bottom: 1px solid var(--border-light);
+    transition: all 0.4s cubic-bezier(0.4, 0, 0.2, 1);
+    gap: 24px;
+    width: 100%;
+    position: relative;
+    z-index: 1;
+}
+
+
+
+.product-card.no-image .product-info-center {
+    padding-left: 8px;
+}
+
+.product-card.no-image .product-name {
+    font-size: 1.05rem;
+}
+
+.product-card.no-image .product-price {
+    font-size: 0.95rem;
+}
+
+.product-card:hover {
+    background: var(--bg-color);
+}
+
+.product-image-container {
+    width: 64px;
+    height: 64px;
+    min-width: 64px;
+    border-radius: 12px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    overflow: hidden;
+    position: relative;
+    background: var(--border-light);
+}
+
+.product-image-container img {
+    width: 75%;
+    height: 75%;
+    object-fit: contain;
+    transition: transform 0.5s ease;
+}
+
+.product-card:hover .product-image-container img {
+    transform: scale(1.1);
+}
+
+.product-info-center {
+    flex: 1;
+}
+
+.product-name {
+    font-size: 1rem;
+    font-weight: 600;
+    color: var(--text-main);
+    margin: 0;
+}
+
+.product-price {
+    font-weight: 700;
+    color: var(--accent);
+    font-size: 0.9rem;
+    margin-top: 4px;
+}
+
+.product-actions-right {
+    display: flex;
+    align-items: center;
+    gap: 16px;
+}
+
+/* ADD Button - Orange style from reference */
+.add-btn {
+    border: 1.5px solid var(--accent);
+    background: transparent;
+    color: var(--text-main);
+    padding: 8px 24px;
+    border-radius: 8px;
+    font-weight: 700;
+    font-size: 0.8rem;
+    letter-spacing: 0.02em;
+    transition: all 0.3s ease;
+}
+
+.add-btn:hover {
+    background: var(--accent);
+    color: white;
+    transform: translateY(-1px);
+    box-shadow: 0 4px 12px rgba(245, 158, 11, 0.3);
+}
+
+.add-btn.filled {
+    background: var(--accent);
+    color: white;
+}
+
+/* Heart Button - Orange color when active, matches reference */
+.heart-btn {
+    color: var(--text-muted);
+    transition: all 0.3s ease;
+    padding: 8px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    border-radius: 10px;
+    background: transparent;
+}
+
+.heart-btn:hover {
+    color: var(--accent);
+    transform: scale(1.15);
+}
+
+.heart-btn.active {
+    color: var(--accent);
+}
+
+/* Quantity Control - When item is in cart */
+.quantity-control {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    background: var(--accent);
+    padding: 4px 8px;
+    border-radius: 8px;
+}
+
+.qty-btn {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    width: 28px;
+    height: 28px;
+    border-radius: 6px;
+    background: rgba(255, 255, 255, 0.2);
+    color: white;
+    transition: all 0.2s ease;
+}
+
+.qty-btn:hover {
+    background: rgba(255, 255, 255, 0.3);
+}
+
+.qty-value {
+    font-weight: 800;
+    font-size: 0.9rem;
+    color: white;
+    min-width: 24px;
+    text-align: center;
+}
+
+@media (max-width: 640px) {
+    .product-card {
+        padding: 10px 12px;
+        gap: 12px;
+    }
+
+    .add-btn {
+        padding: 4px 12px;
+        font-size: 0.7rem;
+    }
+
+    .product-name {
+        font-size: 0.85rem;
+    }
+
+    .product-price {
+        font-size: 0.8rem;
+    }
+
+    .product-image-container {
+        width: 48px;
+        height: 48px;
+        min-width: 48px;
+        border-radius: 8px;
+    }
+
+    .product-actions-right {
+        gap: 8px;
+    }
+
+    .heart-btn {
+        padding: 6px;
+    }
+
+    .quantity-control {
+        gap: 4px;
+        padding: 3px 6px;
+    }
+
+    .qty-btn {
+        width: 24px;
+        height: 24px;
+    }
+
+    .qty-value {
+        font-size: 0.8rem;
+        min-width: 18px;
+    }
+
+
+
+    .product-card.no-image .product-name {
+        font-size: 0.9rem;
+    }
+
+    .product-card.no-image .product-price {
+        font-size: 0.85rem;
+    }
+}

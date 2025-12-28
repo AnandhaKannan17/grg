@@ -1,0 +1,156 @@
+.main-header {
+    background: var(--header-bg);
+    backdrop-filter: blur(12px);
+    -webkit-backdrop-filter: blur(12px);
+    border-bottom: 1px solid var(--border-light);
+    height: 80px;
+    display: flex;
+    align-items: center;
+    position: sticky;
+    top: 0;
+    z-index: 1000;
+    transition: all 0.3s ease;
+}
+
+.header-container {
+    width: 100%;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 0 3rem;
+}
+
+.logo {
+    font-size: 1.5rem;
+    font-weight: 800;
+    color: var(--primary);
+    letter-spacing: -0.02em;
+    text-decoration: none;
+    font-style: italic;
+}
+
+.header-nav {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+}
+
+/* Base nav item - clean style */
+.nav-item {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 8px;
+    padding: 10px 16px;
+    color: var(--text-muted);
+    text-decoration: none;
+    font-weight: 600;
+    font-size: 0.85rem;
+    letter-spacing: 0.02em;
+    transition: all 0.3s ease;
+    background: none;
+    border: none;
+}
+
+.nav-item:hover {
+    color: var(--accent);
+}
+
+.nav-item.active {
+    color: var(--accent);
+}
+
+.icon-wrapper {
+    position: relative;
+    display: flex;
+    align-items: center;
+    transition: transform 0.3s ease;
+}
+
+.nav-item:hover .icon-wrapper {
+    transform: scale(1.1);
+}
+
+/* Notification Badge - Orange */
+.nav-badge {
+    position: absolute;
+    top: -8px;
+    right: -8px;
+    background: var(--accent);
+    color: white;
+    font-size: 10px;
+    padding: 2px 6px;
+    border-radius: 20px;
+    font-weight: 700;
+    box-shadow: 0 2px 4px rgba(245, 158, 11, 0.3);
+}
+
+/* Theme toggle button - keep bordered style */
+.theme-toggle {
+    padding: 10px 14px;
+    color: var(--text-muted);
+    cursor: pointer;
+    border: 1px solid var(--border-color);
+    border-radius: 10px;
+}
+
+.theme-toggle:hover {
+    color: var(--accent);
+    border-color: var(--accent);
+}
+
+/* Login button */
+.login-btn {
+    color: var(--text-muted);
+}
+
+.login-btn:hover {
+    color: var(--accent);
+}
+
+@media (max-width: 1024px) {
+    .nav-label {
+        display: none;
+    }
+
+    .nav-item {
+        padding: 10px 12px;
+    }
+
+    .header-container {
+        padding: 0 1.5rem;
+    }
+}
+
+@media (max-width: 640px) {
+    .main-header {
+        height: 60px;
+    }
+
+    .header-nav {
+        gap: 4px;
+    }
+
+    .logo {
+        font-size: 1.2rem;
+    }
+
+    .nav-item {
+        padding: 8px 10px;
+    }
+
+    .theme-toggle {
+        padding: 8px 10px;
+    }
+
+    .header-container {
+        padding: 0 0.75rem;
+    }
+
+    .nav-badge {
+        top: -4px;
+        right: -4px;
+        padding: 1px 4px;
+        font-size: 9px;
+    }
+}

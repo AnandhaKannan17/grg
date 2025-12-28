@@ -1,0 +1,598 @@
+/* Auth Modal Backdrop */
+.auth-backdrop {
+    position: fixed;
+    inset: 0;
+    background: rgba(15, 23, 42, 0.6);
+    backdrop-filter: blur(4px);
+    z-index: 1000;
+}
+
+/* Auth Modal Container */
+.auth-modal {
+    position: fixed;
+    inset: 0;
+    margin: auto;
+    width: 100%;
+    max-width: 420px;
+    height: fit-content;
+    background: var(--card-bg);
+    border-radius: 24px;
+    padding: 2.5rem;
+    z-index: 1001;
+    box-shadow: 0 25px 50px -12px rgba(0, 0, 0, 0.25);
+    border: 1px solid var(--border-light);
+    overflow: hidden;
+}
+
+/* Animated Background */
+.auth-bg-animation {
+    position: absolute;
+    inset: 0;
+    overflow: hidden;
+    pointer-events: none;
+    z-index: 0;
+}
+
+/* Floating Orbs */
+.floating-orb {
+    position: absolute;
+    border-radius: 50%;
+    filter: blur(40px);
+    opacity: 0.4;
+    animation: floatOrb 8s ease-in-out infinite;
+}
+
+.orb-1 {
+    width: 120px;
+    height: 120px;
+    background: linear-gradient(135deg, rgba(245, 158, 11, 0.6) 0%, rgba(251, 191, 36, 0.4) 100%);
+    top: -40px;
+    right: -30px;
+    animation-delay: 0s;
+}
+
+.orb-2 {
+    width: 80px;
+    height: 80px;
+    background: linear-gradient(135deg, rgba(251, 191, 36, 0.5) 0%, rgba(245, 158, 11, 0.3) 100%);
+    bottom: 20%;
+    left: -25px;
+    animation-delay: -2s;
+    animation-duration: 10s;
+}
+
+.orb-3 {
+    width: 60px;
+    height: 60px;
+    background: linear-gradient(135deg, rgba(217, 119, 6, 0.5) 0%, rgba(245, 158, 11, 0.3) 100%);
+    bottom: -20px;
+    right: 20%;
+    animation-delay: -4s;
+    animation-duration: 12s;
+}
+
+.orb-4 {
+    width: 40px;
+    height: 40px;
+    background: linear-gradient(135deg, rgba(251, 191, 36, 0.6) 0%, rgba(245, 158, 11, 0.4) 100%);
+    top: 40%;
+    right: -10px;
+    animation-delay: -6s;
+    animation-duration: 9s;
+}
+
+/* Floating Shapes */
+.floating-shape {
+    position: absolute;
+    background: linear-gradient(135deg, rgba(245, 158, 11, 0.1) 0%, rgba(251, 191, 36, 0.05) 100%);
+    border: 1px solid rgba(245, 158, 11, 0.15);
+    animation: floatShape 15s ease-in-out infinite;
+}
+
+.shape-1 {
+    width: 100px;
+    height: 100px;
+    border-radius: 30% 70% 70% 30% / 30% 30% 70% 70%;
+    top: 15%;
+    left: -30px;
+    animation-delay: -3s;
+}
+
+.shape-2 {
+    width: 70px;
+    height: 70px;
+    border-radius: 60% 40% 30% 70% / 60% 30% 70% 40%;
+    bottom: 10%;
+    right: -20px;
+    animation-delay: -7s;
+    animation-duration: 18s;
+}
+
+/* Glow Effects */
+.glow-effect {
+    position: absolute;
+    border-radius: 50%;
+    filter: blur(60px);
+    opacity: 0.15;
+    animation: pulseGlow 4s ease-in-out infinite;
+}
+
+.glow-1 {
+    width: 200px;
+    height: 200px;
+    background: radial-gradient(circle, rgba(245, 158, 11, 0.8) 0%, transparent 70%);
+    top: -80px;
+    left: 50%;
+    transform: translateX(-50%);
+    animation-delay: 0s;
+}
+
+.glow-2 {
+    width: 150px;
+    height: 150px;
+    background: radial-gradient(circle, rgba(251, 191, 36, 0.6) 0%, transparent 70%);
+    bottom: -60px;
+    left: 30%;
+    animation-delay: -2s;
+}
+
+/* Animations */
+@keyframes floatOrb {
+
+    0%,
+    100% {
+        transform: translate(0, 0) scale(1);
+    }
+
+    25% {
+        transform: translate(10px, -15px) scale(1.05);
+    }
+
+    50% {
+        transform: translate(-5px, -25px) scale(0.95);
+    }
+
+    75% {
+        transform: translate(-15px, -10px) scale(1.02);
+    }
+}
+
+@keyframes floatShape {
+
+    0%,
+    100% {
+        transform: translate(0, 0) rotate(0deg);
+    }
+
+    25% {
+        transform: translate(5px, -10px) rotate(5deg);
+    }
+
+    50% {
+        transform: translate(-8px, -15px) rotate(-3deg);
+    }
+
+    75% {
+        transform: translate(-5px, -5px) rotate(2deg);
+    }
+}
+
+@keyframes pulseGlow {
+
+    0%,
+    100% {
+        opacity: 0.15;
+        transform: translateX(-50%) scale(1);
+    }
+
+    50% {
+        opacity: 0.25;
+        transform: translateX(-50%) scale(1.1);
+    }
+}
+
+/* Ensure content is above animation */
+.auth-header,
+.auth-form,
+.auth-switch,
+.auth-close,
+.forgot-password-flow {
+    position: relative;
+    z-index: 1;
+}
+
+/* Close Button */
+.auth-close {
+    position: absolute;
+    top: 1.25rem;
+    right: 1.25rem;
+    color: var(--text-muted);
+    padding: 8px;
+    border-radius: 10px;
+    transition: all 0.3s ease;
+}
+
+.auth-close:hover {
+    color: var(--text-main);
+    background: var(--border-light);
+}
+
+/* Header */
+.auth-header {
+    text-align: center;
+    margin-bottom: 2rem;
+}
+
+.auth-logo {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    margin-bottom: 1.25rem;
+}
+
+.logo-dot {
+    width: 48px;
+    height: 48px;
+    background: linear-gradient(135deg, var(--accent) 0%, var(--accent-hover) 100%);
+    border-radius: 50%;
+    box-shadow: 0 8px 24px rgba(245, 158, 11, 0.3);
+}
+
+.auth-title {
+    font-size: 1.75rem;
+    font-weight: 800;
+    color: var(--text-main);
+    margin-bottom: 0.5rem;
+}
+
+.auth-subtitle {
+    color: var(--text-muted);
+    font-size: 0.95rem;
+}
+
+/* Form */
+.auth-form {
+    display: flex;
+    flex-direction: column;
+    gap: 1rem;
+}
+
+.input-group {
+    position: relative;
+    display: flex;
+    align-items: center;
+    overflow: hidden;
+}
+
+.input-icon {
+    position: absolute;
+    left: 16px;
+    color: var(--text-muted);
+    pointer-events: none;
+    z-index: 1;
+}
+
+.input-group input {
+    width: 100%;
+    padding: 16px 16px 16px 48px;
+    background: var(--bg-color);
+    border: 1.5px solid var(--border-color);
+    border-radius: 12px;
+    font-size: 1rem;
+    color: var(--text-main);
+    transition: all 0.3s ease;
+    font-family: inherit;
+}
+
+.input-group input::placeholder {
+    color: var(--text-muted);
+}
+
+.input-group input:focus {
+    outline: none;
+    border-color: var(--accent);
+    box-shadow: 0 0 0 4px rgba(245, 158, 11, 0.1);
+}
+
+.password-toggle {
+    position: absolute;
+    right: 16px;
+    color: var(--text-muted);
+    padding: 4px;
+    transition: color 0.3s ease;
+}
+
+.password-toggle:hover {
+    color: var(--text-main);
+}
+
+.forgot-password {
+    text-align: right;
+    margin-top: -0.5rem;
+}
+
+.forgot-password a {
+    color: var(--accent);
+    font-size: 0.875rem;
+    font-weight: 600;
+    text-decoration: none;
+    transition: color 0.3s ease;
+}
+
+.forgot-password a:hover {
+    color: var(--accent-hover);
+}
+
+/* Submit Button */
+.auth-submit {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 10px;
+    width: 100%;
+    padding: 16px;
+    background: linear-gradient(135deg, var(--accent) 0%, var(--accent-hover) 100%);
+    color: white;
+    border-radius: 12px;
+    font-size: 1rem;
+    font-weight: 700;
+    margin-top: 0.5rem;
+    box-shadow: 0 4px 14px rgba(245, 158, 11, 0.3);
+    transition: all 0.3s ease;
+}
+
+.auth-submit:hover {
+    box-shadow: 0 8px 25px rgba(245, 158, 11, 0.4);
+}
+
+.auth-submit svg {
+    transition: transform 0.3s ease;
+}
+
+.auth-submit:hover svg {
+    transform: translateX(4px);
+}
+
+/* Divider */
+.auth-divider {
+    display: flex;
+    align-items: center;
+    gap: 1rem;
+    margin: 1.5rem 0;
+}
+
+.auth-divider::before,
+.auth-divider::after {
+    content: "";
+    flex: 1;
+    height: 1px;
+    background: var(--border-color);
+}
+
+.auth-divider span {
+    color: var(--text-muted);
+    font-size: 0.85rem;
+    white-space: nowrap;
+}
+
+/* Social Buttons */
+.social-buttons {
+    display: flex;
+    gap: 1rem;
+}
+
+.social-btn {
+    flex: 1;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 10px;
+    padding: 14px;
+    background: var(--bg-color);
+    border: 1.5px solid var(--border-color);
+    border-radius: 12px;
+    font-size: 0.9rem;
+    font-weight: 600;
+    color: var(--text-main);
+    transition: all 0.3s ease;
+}
+
+.social-btn:hover {
+    border-color: var(--text-muted);
+    background: var(--card-bg);
+}
+
+/* Switch Mode */
+.auth-switch {
+    text-align: center;
+    margin-top: 1.5rem;
+    color: var(--text-muted);
+    font-size: 0.9rem;
+}
+
+.auth-switch button {
+    color: var(--accent);
+    font-weight: 700;
+    margin-left: 4px;
+    transition: color 0.3s ease;
+}
+
+.auth-switch button:hover {
+    color: var(--accent-hover);
+}
+
+/* Forgot Password Flow */
+.forgot-password-flow {
+    animation: slideIn 0.3s ease;
+}
+
+@keyframes slideIn {
+    from {
+        opacity: 0;
+        transform: translateX(20px);
+    }
+
+    to {
+        opacity: 1;
+        transform: translateX(0);
+    }
+}
+
+.forgot-header {
+    margin-top: 0.5rem;
+}
+
+.forgot-icon {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    width: 64px;
+    height: 64px;
+    background: linear-gradient(135deg, rgba(245, 158, 11, 0.15) 0%, rgba(245, 158, 11, 0.25) 100%);
+    border-radius: 50%;
+    color: var(--accent);
+    margin-bottom: 1.25rem;
+}
+
+.forgot-icon.success {
+    background: linear-gradient(135deg, rgba(34, 197, 94, 0.15) 0%, rgba(34, 197, 94, 0.25) 100%);
+    color: #22c55e;
+}
+
+.back-btn {
+    display: flex;
+    align-items: center;
+    gap: 6px;
+    color: var(--text-muted);
+    font-size: 0.875rem;
+    font-weight: 500;
+    padding: 8px 0;
+    margin-bottom: 0.5rem;
+    transition: all 0.3s ease;
+}
+
+.back-btn:hover {
+    color: var(--accent);
+}
+
+.back-btn svg {
+    transition: transform 0.3s ease;
+}
+
+.back-btn:hover svg {
+    transform: translateX(-4px);
+}
+
+/* OTP Input */
+.otp-input-container {
+    display: flex;
+    justify-content: center;
+}
+
+.otp-input {
+    width: 100%;
+    padding: 18px !important;
+    text-align: center;
+    font-size: 1.5rem !important;
+    font-weight: 700;
+    letter-spacing: 12px;
+    background: var(--bg-color);
+    border: 2px solid var(--border-color);
+    border-radius: 12px;
+    color: var(--text-main);
+    transition: all 0.3s ease;
+    font-family: inherit;
+}
+
+.otp-input:focus {
+    outline: none;
+    border-color: var(--accent);
+    box-shadow: 0 0 0 4px rgba(245, 158, 11, 0.1);
+}
+
+.otp-input::placeholder {
+    color: var(--text-muted);
+    font-size: 1rem;
+    letter-spacing: 0;
+}
+
+/* Resend OTP */
+.resend-otp {
+    text-align: center;
+    color: var(--text-muted);
+    font-size: 0.875rem;
+    margin-top: -0.25rem;
+}
+
+.resend-otp button {
+    color: var(--accent);
+    font-weight: 600;
+    margin-left: 6px;
+    transition: color 0.3s ease;
+}
+
+.resend-otp button:hover {
+    color: var(--accent-hover);
+}
+
+/* Password Mismatch Error */
+.password-mismatch {
+    color: #ef4444;
+    font-size: 0.8rem;
+    margin-top: -0.5rem;
+    padding-left: 4px;
+}
+
+/* Reset Password Modal */
+.reset-password-modal {
+    animation: scaleIn 0.3s ease;
+}
+
+@keyframes scaleIn {
+    from {
+        opacity: 0;
+        transform: scale(0.95);
+    }
+
+    to {
+        opacity: 1;
+        transform: scale(1);
+    }
+}
+
+.auth-submit:disabled {
+    opacity: 0.6;
+    cursor: not-allowed;
+}
+
+/* Mobile Responsive */
+@media (max-width: 480px) {
+    .auth-modal {
+        max-width: calc(100% - 2rem);
+        padding: 2rem 1.5rem;
+        border-radius: 20px;
+    }
+
+    .auth-title {
+        font-size: 1.5rem;
+    }
+
+    .input-group input {
+        padding: 14px 14px 14px 44px;
+    }
+
+    .auth-submit {
+        padding: 14px;
+    }
+
+    .forgot-icon {
+        width: 56px;
+        height: 56px;
+    }
+
+    .otp-input {
+        font-size: 1.25rem !important;
+        letter-spacing: 8px;
+        padding: 14px !important;
+    }
+}

@@ -1,0 +1,230 @@
+.cart-page {
+    padding-bottom: 6rem;
+    padding-top: 20px;
+    position: relative;
+    z-index: 1;
+    min-height: calc(100vh - 100px);
+}
+
+.page-title {
+    font-size: 2.5rem;
+    font-weight: 800;
+    margin-bottom: 2.5rem;
+    color: var(--text-main);
+    letter-spacing: -0.02em;
+}
+
+.cart-content {
+    display: grid;
+    grid-template-columns: 1fr 380px;
+    gap: 3rem;
+}
+
+.cart-items {
+    display: flex;
+    flex-direction: column;
+    gap: 1rem;
+}
+
+.cart-item {
+    display: flex;
+    gap: 1.5rem;
+    background: var(--card-bg);
+    padding: 20px;
+    border-radius: 12px;
+    border: 1px solid var(--border-light);
+    transition: var(--transition);
+}
+
+.cart-item:hover {
+    box-shadow: var(--shadow-md);
+}
+
+.item-img {
+    width: 100px;
+    height: 100px;
+    background: var(--border-light);
+    border-radius: 10px;
+    overflow: hidden;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+.item-img img {
+    width: 80%;
+    height: 80%;
+    object-fit: contain;
+}
+
+.item-info {
+    flex: 1;
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+}
+
+.item-details h3 {
+    font-size: 1.1rem;
+    font-weight: 600;
+    margin-bottom: 0.5rem;
+    color: var(--text-main);
+}
+
+.item-price {
+    font-weight: 700;
+    color: var(--accent);
+    font-size: 1rem;
+}
+
+.item-actions {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+}
+
+.quantity-controls {
+    display: flex;
+    align-items: center;
+    gap: 1rem;
+    background: var(--border-light);
+    padding: 6px 12px;
+    border-radius: 8px;
+}
+
+.q-btn {
+    padding: 4px;
+    border-radius: 4px;
+    color: var(--text-main);
+    transition: all 0.2s ease;
+}
+
+.q-btn:hover {
+    background: var(--card-bg);
+    color: var(--accent);
+}
+
+.quantity {
+    font-weight: 700;
+    min-width: 24px;
+    text-align: center;
+    color: var(--text-main);
+}
+
+.remove-btn {
+    color: var(--text-muted);
+    transition: var(--transition);
+    padding: 8px;
+    border-radius: 8px;
+}
+
+.remove-btn:hover {
+    color: #ef4444;
+    background: rgba(239, 68, 68, 0.1);
+}
+
+.cart-summary {
+    background: var(--card-bg);
+    padding: 2rem;
+    border-radius: 12px;
+    border: 1px solid var(--border-light);
+    height: fit-content;
+    position: sticky;
+    top: 120px;
+}
+
+.cart-summary h3 {
+    font-size: 1.25rem;
+    margin-bottom: 1.5rem;
+    padding-bottom: 1rem;
+    border-bottom: 1px solid var(--border-light);
+}
+
+.summary-row {
+    display: flex;
+    justify-content: space-between;
+    margin-bottom: 1rem;
+    color: var(--text-muted);
+    font-weight: 500;
+}
+
+.summary-total {
+    display: flex;
+    justify-content: space-between;
+    margin-top: 1.5rem;
+    padding-top: 1.5rem;
+    border-top: 1px solid var(--border-light);
+    font-weight: 700;
+    font-size: 1.25rem;
+    color: var(--text-main);
+}
+
+.checkout-btn {
+    width: 100%;
+    margin-top: 2rem;
+    background: var(--accent);
+    color: white;
+    font-size: 1rem;
+}
+
+.checkout-btn:hover {
+    background: var(--accent-hover);
+}
+
+.empty-state {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    padding: 5rem 2rem;
+    background: var(--card-bg);
+    border-radius: 12px;
+    border: 1px solid var(--border-light);
+    text-align: center;
+}
+
+.empty-state h2 {
+    font-size: 1.5rem;
+    margin-bottom: 0.75rem;
+}
+
+.empty-state p {
+    color: var(--text-muted);
+    font-size: 1rem;
+}
+
+@media (max-width: 1024px) {
+    .cart-content {
+        grid-template-columns: 1fr;
+        gap: 2rem;
+    }
+
+    .cart-summary {
+        position: static;
+    }
+}
+
+@media (max-width: 640px) {
+    .page-title {
+        font-size: 1.75rem;
+        margin-bottom: 1.5rem;
+    }
+
+    .cart-item {
+        gap: 1rem;
+        padding: 16px;
+    }
+
+    .item-img {
+        width: 80px;
+        height: 80px;
+    }
+
+    .item-details h3 {
+        font-size: 1rem;
+    }
+
+    .cart-summary {
+        padding: 1.5rem;
+    }
+}
